@@ -9,7 +9,7 @@ export default async function Dashboard() {
   const data = await useFetch('/objects');
 
   return (
-    <div className="p-6">
+    <div>
         <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold mb-4">Admin Panel</h1>
             <Link href="/add-product">

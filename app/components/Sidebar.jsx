@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({ toggleSidebar }) {
   const pathname = usePathname();
 
   const links = [
@@ -12,7 +12,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-gray-100 dark:bg-gray-900 border-r border-gray-300 dark:border-gray-700 p-4 flex flex-col">
+    <aside className="w-64 h-full bg-gray-100 dark:bg-gray-900 border-r border-gray-300 dark:border-gray-700 p-4 flex flex-col">
       <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-gray-200">
         Menu
       </h2>
@@ -27,13 +27,14 @@ export default function Sidebar() {
               href={item.href}
               className={`
                 px-4 py-2 rounded-md font-medium
-                transition-all
+                transition-all cursor-pointer
                 ${
                   active
                     ? "bg-blue-600 text-white"
                     : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }
               `}
+              onClick={() => toggleSidebar && toggleSidebar()}
             >
               {item.label}
             </Link>
