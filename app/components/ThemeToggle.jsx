@@ -1,29 +1,34 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
+import Image from "next/image"
 
-export default function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+export default function ThemeSwitch() {
+  const [mounted, setMounted] = useState(false)
+  const { setTheme, resolvedTheme } = useTheme()
 
-  useEffect(() => {
-    const isDark = localStorage.getItem("theme") === "dark";
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
-  }, []);
+  useEffect(() =>  setMounted(true), [])
 
-  const toggleTheme = () => {
-    const newTheme = !dark;
-    setDark(newTheme);
-    document.documentElement.classList.toggle("dark", newTheme);
-    localStorage.setItem("theme", newTheme ? "dark" : "light");
-  };
+  if (!mounted) return (
+    <Image
+      src="data:image/svg+xml;base64,PHN2ZyBzdHJva2U9IiNGRkZGRkYiIGZpbGw9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMCIgdmlld0JveD0iMCAwIDI0IDI0IiBoZWlnaHQ9IjIwMHB4IiB3aWR0aD0iMjAwcHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiB4PSIyIiB5PSIyIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIHJ4PSIyIj48L3JlY3Q+PC9zdmc+Cg=="
+      width={36}
+      height={36}
+      sizes="36x36"
+      alt="Loading Light/Dark Toggle"
+      priority={false}
+      title="Loading Light/Dark Toggle"
+    />
+  )
 
-  return (
-    <button
-      onClick={toggleTheme}
-      className="p-2 rounded-lg"
-    >
-      {dark ? "🌙 Dark" : "☀️ Light"}
-    </button>
-  );
+  if (resolvedTheme === 'dark') {
+    return <div className='cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-800 rounded-md px-4 py-2 ' onClick={() => setTheme('light')}>☀️ Light</div>
+  }
+
+  if (resolvedTheme === 'light') {
+    return <div className='cursor-pointer hover:bg-blue-800 dark:hover:bg-blue-800 rounded-md px-4 py-2 ' onClick={() => setTheme('dark')}>🌙 Dark</div>
+  }
+
 }
+

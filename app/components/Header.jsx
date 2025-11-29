@@ -1,6 +1,16 @@
 import ThemeToggle from "@/components/ThemeToggle";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header({ toggleSidebar }) {
+
+  const pathname = usePathname();
+
+  const links = [
+    { href: "/", label: "Dashboard" },
+    { href: "/add-product", label: "Add Product" },
+    { href: "/products", label: "Products" },
+  ];
 
   return (
     <header className="w-full bg-blue-600 text-white p-4 shadow-md">
@@ -22,11 +32,31 @@ export default function Header({ toggleSidebar }) {
             />
           </svg>
         </button>
-        <nav className="space-x-4">
-            <ThemeToggle />
-            <a href="/" className="hover:underline">Home</a>
-            <a href="/dashboard" className="hover:underline">Dashboard</a>
-            <a href="/about" className="hover:underline">About</a>
+        <nav className="flex space-x-4">
+          <ThemeToggle />
+          {links.map((item) => {
+            const active = pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`
+                  px-4 py-2 rounded-md font-medium
+                  transition-all cursor-pointer
+                  hover:bg-blue-800 dark:hover:bg-blue-800
+                  ${
+                    active
+                      ? "bg-blue-800 text-white"
+                      : "text-gray-100 dark:text-gray-300"
+                  }
+                `}
+                onClick={() => toggleSidebar && toggleSidebar()}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </header>
