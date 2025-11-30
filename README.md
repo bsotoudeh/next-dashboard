@@ -50,5 +50,4 @@
 - /add-product
 
 # Vercel Deployment
-
-https://next-dashboard-app-git-main-behnoushs-projects.vercel.app/
+https://next-dashboard-admin-liard.vercel.app/
