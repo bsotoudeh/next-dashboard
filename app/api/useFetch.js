@@ -1,14 +1,17 @@
 export async function useFetch(path) {
-
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE;
+  const url = `${baseUrl}${path}`;
 
-  const res = await fetch(`${baseUrl}${path}`, {
-    cache: "no-store",
-  });
+  try {
+    const res = await fetch(url, { cache: "no-store" });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch objects");
+    if (!res.ok) {
+      throw new Error(`Failed to fetch objects: ${res.status}`);
+    }
+
+    return res.json();
+  } catch (err) {
+    console.error("Fetch error detail:", err.cause ?? err);
+    throw err;
   }
-
-  return res.json();
 }
